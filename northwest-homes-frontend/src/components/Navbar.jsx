@@ -52,43 +52,43 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
         </div>
       </div>
 
-      {/* Crystal Clear Non-Blurred Mobile Menu */}
+      {/* 100% Transparent Mobile Menu with Only Text visible over Video */}
       {isOpen && (
-        <div className="md:hidden absolute top-24 left-0 w-full bg-slate-950/90 border-b border-white/10 px-6 py-8 flex flex-col space-y-6 text-center shadow-2xl">
+        <div className="md:hidden absolute top-24 left-0 w-full bg-transparent px-6 py-8 flex flex-col space-y-6 text-center">
           <button 
             onClick={() => handleCategoryClick('All')} 
-            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium"
+            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium drop-shadow-md"
           >
             Properties
           </button>
           <button 
             onClick={() => handleCategoryClick('Sales')} 
-            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium"
+            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium drop-shadow-md"
           >
             For Sale
           </button>
           <button 
             onClick={() => handleCategoryClick('Lettings')} 
-            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium"
+            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium drop-shadow-md"
           >
             To Let
           </button>
           <button 
             onClick={() => handleCategoryClick('Student Accommodation')} 
-            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium"
+            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium drop-shadow-md"
           >
             Student Living
           </button>
           <button 
             onClick={handleScrollToAbout} 
-            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium"
+            className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium drop-shadow-md"
           >
             About Us
           </button>
-          <div className="pt-4 border-t border-white/20">
+          <div className="pt-4">
             <button 
               onClick={() => { setIsOpen(false); onOpenModal(); }} 
-              className="w-full bg-white text-slate-900 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 transition-colors shadow-lg"
+              className="w-full bg-white text-slate-900 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 transition-colors shadow-2xl"
             >
               Book Viewing
             </button>
