@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "Luxury Apartment in City Centre",
+        "category": "Sales",
+        "price": "£450,000",
+        "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+        "features": "3 Beds • 2 Baths • Premium Finish"
+    },
+    {
+        "id": 2,
+        "title": "Modern Family Home",
+        "category": "Lettings",
+        "price": "£1,200 pcm",
+        "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
+        "features": "4 Beds • Garden • Garage"
+    },
+    {
+        "id": 3,
+        "title": "University Campus Studio",
+        "category": "Student Accommodation",
+        "price": "£150 pw",
+        "image": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+        "features": "1 Bed • Fully Furnished • Wi-Fi Included"
+    }
+]
