@@ -52,9 +52,9 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
         </div>
       </div>
 
-      {/* Fully Transparent Glassmorphism Mobile Menu */}
+      {/* Crystal Clear Non-Blurred Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-24 left-0 w-full bg-black/30 backdrop-blur-md border-b border-white/10 px-6 py-8 flex flex-col space-y-6 text-center shadow-2xl">
+        <div className="md:hidden absolute top-24 left-0 w-full bg-slate-950/90 border-b border-white/10 px-6 py-8 flex flex-col space-y-6 text-center shadow-2xl">
           <button 
             onClick={() => handleCategoryClick('All')} 
             className="text-white hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2 font-medium"
