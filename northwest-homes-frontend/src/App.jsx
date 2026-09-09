@@ -13,6 +13,7 @@ function App() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('viewing');
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu state
   
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -40,8 +41,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
-      <Navbar onOpenModal={() => openModal('viewing')} onNavClick={handleNavClick} />
-      <Hero onOpenModal={() => openModal('valuation')} onScroll={() => handleNavClick('All')} />
+      <Navbar 
+        onOpenModal={() => openModal('viewing')} 
+        onNavClick={handleNavClick} 
+        onMenuToggle={setIsMenuOpen} 
+      />
+      <Hero 
+        onOpenModal={() => openModal('valuation')} 
+        onScroll={() => handleNavClick('All')} 
+        isMenuOpen={isMenuOpen} 
+      />
 
       <section id="properties" className="max-w-7xl mx-auto py-24 px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
@@ -65,7 +74,6 @@ function App() {
           </div>
         </div>
 
-        {/* Vertical Cinematic Stack instead of Grid */}
         <div className="space-y-12">
           {filteredProperties.length > 0 ? (
             filteredProperties.map((property, index) => (

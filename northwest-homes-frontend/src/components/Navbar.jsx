@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
-const Navbar = ({ onOpenModal, onNavClick }) => {
+const Navbar = ({ onOpenModal, onNavClick, onMenuToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    const nextState = !isOpen;
+    setIsOpen(nextState);
+    if (onMenuToggle) onMenuToggle(nextState);
+  };
 
   const handleScrollToAbout = () => {
     setIsOpen(false);
+    if (onMenuToggle) onMenuToggle(false);
     document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleCategoryClick = (category) => {
     setIsOpen(false);
+    if (onMenuToggle) onMenuToggle(false);
     onNavClick(category);
   };
 
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 bg-transparent text-white transition-all">
       <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-        {/* Brand Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span className="text-lg md:text-xl font-semibold tracking-wider uppercase">
             Northwest<span className="font-light text-slate-300">Homes</span>
@@ -33,7 +40,6 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
           <button onClick={handleScrollToAbout} className="hover:text-white transition-colors uppercase tracking-wider text-xs">About Us</button>
         </div>
 
-        {/* Desktop CTA */}
         <div className="hidden md:block">
           <button onClick={onOpenModal} className="border border-white/80 text-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider hover:bg-white hover:text-slate-900 transition-all">
             Book Viewing
@@ -43,7 +49,7 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
         {/* Mobile Hamburger Button */}
         <div className="md:hidden flex items-center">
           <button 
-            onClick={() => setIsOpen(!isOpen)} 
+            onClick={toggleMenu} 
             className="text-white p-2 focus:outline-none"
             aria-label="Toggle Menu"
           >
@@ -52,7 +58,7 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
         </div>
       </div>
 
-      {/* 100% Transparent Mobile Menu with Only Text visible over Video */}
+      {/* Transparent Mobile Menu */}
       {isOpen && (
         <div className="md:hidden absolute top-24 left-0 w-full bg-transparent px-6 py-8 flex flex-col space-y-6 text-center">
           <button 
@@ -87,7 +93,7 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
           </button>
           <div className="pt-4">
             <button 
-              onClick={() => { setIsOpen(false); onOpenModal(); }} 
+              onClick={() => { toggleMenu(); onOpenModal(); }} 
               className="w-full bg-white text-slate-900 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 transition-colors shadow-2xl"
             >
               Book Viewing
