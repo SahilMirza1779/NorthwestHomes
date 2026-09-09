@@ -52,9 +52,9 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
         </div>
       </div>
 
-      {/* Mobile Dropdown / Drawer Menu */}
+      {/* Mobile Dropdown / Drawer Menu with Transparency */}
       {isOpen && (
-        <div className="md:hidden absolute top-24 left-0 w-full bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 px-6 py-8 flex flex-col space-y-6 text-center shadow-2xl">
+        <div className="md:hidden absolute top-24 left-0 w-full bg-slate-950/70 backdrop-blur-md border-b border-white/10 px-6 py-8 flex flex-col space-y-6 text-center shadow-2xl">
           <button 
             onClick={() => handleCategoryClick('All')} 
             className="text-slate-200 hover:text-amber-400 text-sm uppercase tracking-widest transition-colors py-2"
@@ -85,7 +85,7 @@ const Navbar = ({ onOpenModal, onNavClick }) => {
           >
             About Us
           </button>
-          <div className="pt-4 border-t border-slate-800">
+          <div className="pt-4 border-t border-white/10">
             <button 
               onClick={() => { setIsOpen(false); onOpenModal(); }} 
               className="w-full bg-white text-slate-900 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 transition-colors"
