@@ -11,7 +11,6 @@ const PropertyCard = ({ property, index, onViewDetails }) => {
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       className="bg-white border border-gray-100 shadow-sm overflow-hidden mb-20 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center rounded-sm"
     >
-      {/* Image Container with Cinematic Scroll Expansion */}
       <div className={`relative h-[450px] overflow-hidden ${index % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
         <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-900 shadow-sm">
           {property.category}
@@ -25,7 +24,6 @@ const PropertyCard = ({ property, index, onViewDetails }) => {
         />
       </div>
 
-      {/* Content Container */}
       <div className={`p-8 md:p-14 flex flex-col justify-center ${index % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
         <span className="text-xs uppercase tracking-[0.3em] text-amber-600 font-medium mb-3 block">
           Featured Collection
@@ -58,5 +56,4 @@ const PropertyCard = ({ property, index, onViewDetails }) => {
   );
 };
 
-exports = PropertyCard;
 export default PropertyCard;
