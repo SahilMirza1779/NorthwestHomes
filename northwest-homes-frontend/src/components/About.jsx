@@ -7,52 +7,60 @@ const About = () => {
 
   return (
     <>
-      <section id="about" className="py-24 bg-white border-t border-gray-100">
+      <motion.section 
+        id="about" 
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.25 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="py-28 bg-white border-t border-gray-100 overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <motion.div 
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="text-xs uppercase tracking-widest text-amber-600 font-medium mb-4 block">Our Legacy</span>
-              <h2 className="text-4xl font-light tracking-tight text-slate-900 mb-6 leading-snug">
+              <span className="text-xs uppercase tracking-[0.3em] text-amber-600 font-medium mb-4 block">Our Legacy</span>
+              <h2 className="text-4xl md:text-5xl font-light tracking-tight text-slate-900 mb-6 leading-snug">
                 Elevating the standard of <br/> <span className="font-serif italic text-slate-500">Modern Living</span>
               </h2>
-              <p className="text-slate-600 font-light leading-relaxed mb-6">
+              <p className="text-slate-600 font-light leading-relaxed mb-6 text-sm">
                 At Northwest Homes, we believe that a home is more than just a place to live—it's a sanctuary. Inspired by premium architectural traditions and modern design principles, we curate properties that offer an unparalleled lifestyle experience.
               </p>
-              <p className="text-slate-600 font-light leading-relaxed">
+              <p className="text-slate-600 font-light leading-relaxed text-sm">
                 Whether you are seeking a premium sales property, an elegant letting, or sophisticated student accommodation, our commitment to excellence ensures that every interaction is seamless and tailored to your unique aspirations.
               </p>
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="mt-8 border-b border-slate-900 pb-1 text-sm font-semibold uppercase tracking-wider text-slate-900 hover:text-amber-600 hover:border-amber-600 transition-colors"
+                className="mt-8 border-b border-slate-900 pb-1 text-xs font-semibold uppercase tracking-widest text-slate-900 hover:text-amber-600 hover:border-amber-600 transition-colors"
               >
                 Discover Our Story
               </button>
             </motion.div>
+
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9, x: 40 }}
+              whileInView={{ opacity: 1, scale: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
               className="relative h-[500px]"
             >
               <img 
                 src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80" 
                 alt="Premium Living" 
-                className="w-full h-full object-cover rounded-sm shadow-xl"
+                className="w-full h-full object-cover rounded-sm shadow-2xl"
               />
-              <div className="absolute -bottom-6 -left-6 bg-slate-900 text-white p-8 hidden md:block">
+              <div className="absolute -bottom-6 -left-6 bg-slate-900 text-white p-8 hidden md:block shadow-xl">
                 <p className="text-4xl font-light mb-1">15+</p>
                 <p className="text-xs uppercase tracking-widest text-slate-400">Years of Excellence</p>
               </div>
             </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Story Modal */}
       <AnimatePresence>
