@@ -1,26 +1,86 @@
 [
-    {
-        "id": 1,
-        "title": "Luxury Apartment in City Centre",
-        "category": "Sales",
-        "price": "£450,000",
-        "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
-        "features": "3 Beds • 2 Baths • Premium Finish"
-    },
-    {
-        "id": 2,
-        "title": "Modern Family Home",
-        "category": "Lettings",
-        "price": "£1,200 pcm",
-        "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
-        "features": "4 Beds • Garden • Garage"
-    },
-    {
-        "id": 3,
-        "title": "University Campus Studio",
-        "category": "Student Accommodation",
-        "price": "£150 pw",
-        "image": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
-        "features": "1 Bed • Fully Furnished • Wi-Fi Included"
-    }
+  {
+    "id": 1,
+    "title": "Premium AC Dormitory",
+    "category": "Dormitory",
+    "location": "North West Campus, Manchester",
+    "price": "£20/day | £400/mo",
+    "duration": "1 Day to 1 Year",
+    "status": "Available",
+    "images": [
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80"
+    ],
+    "capacity": "4 Beds"
+  },
+  {
+    "id": 2,
+    "title": "Private Studio Room",
+    "category": "Room",
+    "location": "City Center, Manchester",
+    "price": "£50/day | £1,200/mo",
+    "duration": "1 Day to 6 Months",
+    "status": "Occupied",
+    "images": [
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
+    ],
+    "capacity": "2 People"
+  },
+  {
+    "id": 3,
+    "title": "Student Boys Hostel",
+    "category": "Hostel",
+    "location": "Fallowfield, Manchester",
+    "price": "£15/day | £350/mo",
+    "duration": "Monthly/Yearly",
+    "status": "Few Beds Left",
+    "images": [
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
+    ],
+    "capacity": "Shared (3/Room)"
+  },
+  {
+    "id": 4,
+    "title": "Luxury Suite Room",
+    "category": "Suite",
+    "location": "Deansgate, Manchester",
+    "price": "£100/day | £2,500/mo",
+    "duration": "Flexible",
+    "status": "Available",
+    "images": [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+    ],
+    "capacity": "Couples/Family"
+  },
+  {
+    "id": 5,
+    "title": "Co-living Space",
+    "category": "Co-living",
+    "location": "Salford Quays, Manchester",
+    "price": "£30/day | £700/mo",
+    "duration": "Min 1 Week",
+    "status": "Occupied",
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80"
+    ],
+    "capacity": "1 Person/Bed"
+  },
+  {
+    "id": 6,
+    "title": "Budget Single Room",
+    "category": "Room",
+    "location": "Northern Quarter, Manchester",
+    "price": "£25/day | £550/mo",
+    "duration": "1 Day to 1 Year",
+    "status": "Available",
+    "images": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80"
+    ],
+    "capacity": "1 Person"
+  }
 ]

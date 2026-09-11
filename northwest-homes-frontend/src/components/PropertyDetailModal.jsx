@@ -1,84 +1,268 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Bed, Bath, Square, CheckCircle } from 'lucide-react';
+import { X, MapPin, Users, Clock, CheckCircle, ImageOff, AlertCircle, CreditCard, Lock, Check } from 'lucide-react';
 
-const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire }) => {
-  if (!property) return null;
+const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 'GBP' }) => {
+  const [imageError, setImageError] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  if (!isOpen || !property) return null;
+
+  const displayImage = Array.isArray(property.images) && property.images.length > 0 
+    ? property.images[0] 
+    : (property.image || '/placeholder-room.jpg');
+
+  const isOccupied = property.status === 'Occupied';
+
+  const getFormattedPrice = () => {
+    let rate = 1;
+    let symbol = '£';
+
+    if (currency === 'USD') {
+      rate = 1.3;
+      symbol = '$';
+    } else if (currency === 'INR') {
+      rate = 108;
+      symbol = '₹';
+    }
+
+    const dayPrice = Math.round((property.basePriceDay || 20) * rate);
+    const monthPrice = Math.round((property.basePriceMonth || 400) * rate);
+
+    return `${symbol}${dayPrice}/day | ${symbol}${monthPrice.toLocaleString()}/mo`;
+  };
+
+  const getSingleDayPrice = () => {
+    let rate = 1;
+    let symbol = '£';
+    if (currency === 'USD') { rate = 1.3; symbol = '$'; }
+    else if (currency === 'INR') { rate = 108; symbol = '₹'; }
+    return `${symbol}${Math.round((property.basePriceDay || 20) * rate)}`;
+  };
+
+  const handlePaymentSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setIsSuccess(true);
+    }, 1500);
+  };
+
+  const resetAndClose = () => {
+    setShowCheckout(false);
+    setIsSuccess(false);
+    setLoading(false);
+    onClose();
+  };
 
   return (
     <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-md">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-sm shadow-2xl flex flex-col md:flex-row relative"
-          >
-            <button onClick={onClose} className="absolute top-4 right-4 z-10 bg-white p-2 rounded-full shadow-sm text-slate-500 hover:text-slate-900 transition-colors">
+      <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 backdrop-blur-sm">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+        >
+          <div className="w-full md:w-1/2 relative h-64 md:h-auto bg-slate-100 flex items-center justify-center">
+            {isSuccess ? (
+              <div className="absolute inset-0 bg-slate-900 text-white flex flex-col items-center justify-center p-8 text-center">
+                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                  <Check size={32} className="text-white" />
+                </div>
+                <h3 className="text-2xl font-light mb-2">Booking Confirmed!</h3>
+                <p className="text-xs text-slate-300 font-light max-w-xs leading-relaxed mb-6">
+                  Your reservation for <span className="font-medium text-white">{property.title}</span> has been successfully placed.
+                </p>
+                <button 
+                  onClick={resetAndClose}
+                  className="bg-white text-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-widest rounded-lg hover:bg-amber-400 transition-colors"
+                >
+                  Done
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-md shadow-sm">
+                  {property.category}
+                </div>
+                
+                {!imageError ? (
+                  <img 
+                    src={displayImage} 
+                    alt={property.title} 
+                    onError={() => setImageError(true)}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-slate-400">
+                    <ImageOff size={48} className="mb-2 opacity-50" />
+                    <span className="text-xs uppercase tracking-widest">Image Unavailable</span>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          <div className="w-full md:w-1/2 p-8 md:p-10 relative overflow-y-auto flex flex-col">
+            <button 
+              onClick={resetAndClose}
+              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors bg-slate-50 hover:bg-slate-100 p-2 rounded-full z-10"
+            >
               <X size={20} />
             </button>
 
-            {/* Image Section */}
-            <div className="md:w-1/2 h-[300px] md:h-auto relative">
-              <img src={property.image} alt={property.title} className="w-full h-full object-cover" />
-              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1 text-xs font-bold uppercase tracking-wider text-slate-900">
-                {property.category}
-              </div>
-            </div>
+            {!showCheckout ? (
+              <>
+                <span className="text-xs uppercase tracking-[0.2em] text-amber-600 font-medium mb-2 block">
+                  Rental Listing
+                </span>
+                <h2 className="text-3xl font-light text-slate-900 mb-3">{property.title}</h2>
+                
+                <p className="text-sm text-slate-500 mb-6 flex items-center gap-1.5">
+                  <MapPin size={16} className="text-amber-600" /> {property.location}
+                </p>
 
-            {/* Details Section */}
-            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-              <span className="text-sm font-medium text-amber-600 tracking-widest uppercase mb-2 block">
-                Premium Listing
-              </span>
-              <h2 className="text-3xl font-light text-slate-900 mb-2 leading-tight">
-                {property.title}
-              </h2>
-              <p className="text-slate-500 flex items-center gap-1 mb-6 text-sm">
-                <MapPin size={16} /> Exclusive Location, North West
-              </p>
-
-              <div className="text-3xl font-medium text-slate-900 mb-8 pb-8 border-b border-gray-100">
-                {property.price}
-              </div>
-
-              <div className="grid grid-cols-2 gap-y-4 mb-8">
-                <div className="flex items-center gap-2 text-slate-600">
-                  <Bed size={20} className="text-slate-400" /> 
-                  <span className="text-sm">3 Bedrooms</span>
+                <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+                  <div className="text-2xl font-bold text-slate-900">
+                    {getFormattedPrice()}
+                  </div>
+                  <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest ${isOccupied ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+                    {property.status || 'Available'}
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-slate-600">
-                  <Bath size={20} className="text-slate-400" /> 
-                  <span className="text-sm">2 Bathrooms</span>
+
+                <div className="grid grid-cols-2 gap-6 mb-8">
+                  <div className="flex items-start gap-3">
+                    <Clock size={20} className="text-slate-400 mt-0.5" />
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Duration</p>
+                      <p className="text-sm font-medium text-slate-800">{property.duration}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Users size={20} className="text-slate-400 mt-0.5" />
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Capacity</p>
+                      <p className="text-sm font-medium text-slate-800">{property.capacity}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-slate-600">
-                  <Square size={20} className="text-slate-400" /> 
-                  <span className="text-sm">{property.category === 'Sales' ? '2,500 sqft Area' : 'Fully Furnished'}</span>
+
+                <div className="space-y-3 mb-10 flex-grow">
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <CheckCircle size={16} className="text-green-500" /> Wi-Fi & Utilities Included
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <CheckCircle size={16} className="text-green-500" /> 24/7 Security & Support
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <CheckCircle size={16} className="text-green-500" /> Maintenance Covered
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-slate-600">
-                  <CheckCircle size={20} className="text-slate-400" /> 
-                  <span className="text-sm">Premium Finish</span>
+
+                {isOccupied ? (
+                  <div className="w-full bg-slate-100 text-slate-400 px-8 py-4 text-xs font-semibold uppercase tracking-widest rounded-lg flex justify-center items-center gap-2 cursor-not-allowed">
+                    <AlertCircle size={16} /> Currently Occupied
+                  </div>
+                ) : (
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button 
+                      onClick={() => setShowCheckout(true)}
+                      className="flex-1 bg-amber-500 text-slate-900 px-6 py-4 text-xs font-bold uppercase tracking-widest hover:bg-amber-400 transition-colors rounded-lg shadow-md"
+                    >
+                      Book Now
+                    </button>
+                    <button 
+                      onClick={() => {
+                        resetAndClose();
+                        onEnquire();
+                      }}
+                      className="flex-1 bg-slate-900 text-white px-6 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors rounded-lg shadow-md"
+                    >
+                      Send Enquiry
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex flex-col h-full justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-6 pr-6">
+                    <h3 className="text-xl font-medium text-slate-900 flex items-center gap-2">
+                      <CreditCard size={20} className="text-amber-600" /> Secure Checkout
+                    </h3>
+                    <button onClick={() => setShowCheckout(false)} className="text-xs text-slate-500 hover:text-slate-900 underline">
+                      Back to details
+                    </button>
+                  </div>
+
+                  <div className="bg-slate-50 p-4 rounded-lg mb-6 text-xs text-slate-600 flex justify-between items-center border border-gray-100">
+                    <div>
+                      <p className="font-semibold text-slate-900">{property.title}</p>
+                      <p className="text-slate-500">{property.location}</p>
+                    </div>
+                    <div className="text-right font-bold text-slate-900 text-sm">
+                      {getSingleDayPrice()}
+                    </div>
+                  </div>
+
+                  <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                    <div>
+                      <label className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">Cardholder Name</label>
+                      <input type="text" required defaultValue="Sahil Mirza" className="w-full bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500" />
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">Card Number</label>
+                      <div className="relative">
+                        <CreditCard size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                        <input type="text" required defaultValue="4242 •••• •••• 4242" className="w-full bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-amber-500" />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">Expiry Date</label>
+                        <input type="text" required defaultValue="12/28" className="w-full bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500" />
+                      </div>
+                      <div>
+                        <label className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">CVV</label>
+                        <input type="password" required defaultValue="123" maxLength={4} className="w-full bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-lg px-4 py-3 focus:outline-none focus:border-amber-500" />
+                      </div>
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      disabled={loading}
+                      className="w-full bg-slate-900 text-white mt-4 py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 hover:text-slate-900 transition-colors rounded-lg shadow-md flex items-center justify-center gap-2"
+                    >
+                      {loading ? (
+                        <span>Processing Payment...</span>
+                      ) : (
+                        <>
+                          <Lock size={14} /> Pay & Confirm Booking
+                        </>
+                      )}
+                    </button>
+                  </form>
+                </div>
+
+                <div className="mt-6 text-center">
+                  <p className="text-[10px] text-slate-400 flex items-center justify-center gap-1">
+                    <Lock size={12} /> 256-Bit SSL Encrypted Demo Payment Gateway
+                  </p>
                 </div>
               </div>
+            )}
 
-              <p className="text-slate-600 font-light leading-relaxed mb-8 text-sm">
-                Experience the pinnacle of luxury living with this exceptional property. Featuring expansive interiors, bespoke finishes, and breathtaking views, this home is designed for those who appreciate the finer things in life.
-              </p>
-
-              <div className="flex gap-4 mt-auto">
-                <button 
-                  onClick={() => { onClose(); onEnquire(); }}
-                  className="flex-1 bg-slate-900 text-white py-4 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 hover:text-slate-900 transition-colors"
-                >
-                  Book a Viewing
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+          </div>
+        </motion.div>
+      </div>
     </AnimatePresence>
   );
 };
