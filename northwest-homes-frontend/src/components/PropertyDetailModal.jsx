@@ -1,46 +1,36 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Users, Clock, CheckCircle, ImageOff, AlertCircle, CreditCard, Lock, Check } from 'lucide-react';
+import { X, MapPin, Users, Clock, CheckCircle, ImageOff, AlertCircle, CreditCard, Lock, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 'GBP' }) => {
-  const [imageError, setImageError] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+  const [failedImages, setFailedImages] = useState({});
   const [showCheckout, setShowCheckout] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   if (!isOpen || !property) return null;
 
-  const displayImage = Array.isArray(property.images) && property.images.length > 0 
-    ? property.images[0] 
-    : (property.image || '/placeholder-room.jpg');
+  const imageList = Array.isArray(property.images) && property.images.length > 0 
+    ? property.images 
+    : (property.image ? [property.image] : ['/placeholder-room.jpg']);
 
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setCurrentImage((prev) => (prev + 1) % imageList.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImage((prev) => (prev === 0 ? imageList.length - 1 : prev - 1));
+  };
+
+  const handleImageError = (idx) => {
+    setFailedImages((prev) => ({ ...prev, [idx]: true }));
+  };
+
+  const isCurrentFailed = failedImages[currentImage];
   const isOccupied = property.status === 'Occupied';
-
-  const getFormattedPrice = () => {
-    let rate = 1;
-    let symbol = '£';
-
-    if (currency === 'USD') {
-      rate = 1.3;
-      symbol = '$';
-    } else if (currency === 'INR') {
-      rate = 108;
-      symbol = '₹';
-    }
-
-    const dayPrice = Math.round((property.basePriceDay || 20) * rate);
-    const monthPrice = Math.round((property.basePriceMonth || 400) * rate);
-
-    return `${symbol}${dayPrice}/day | ${symbol}${monthPrice.toLocaleString()}/mo`;
-  };
-
-  const getSingleDayPrice = () => {
-    let rate = 1;
-    let symbol = '£';
-    if (currency === 'USD') { rate = 1.3; symbol = '$'; }
-    else if (currency === 'INR') { rate = 108; symbol = '₹'; }
-    return `${symbol}${Math.round((property.basePriceDay || 20) * rate)}`;
-  };
 
   const handlePaymentSubmit = (e) => {
     e.preventDefault();
@@ -55,6 +45,8 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
     setShowCheckout(false);
     setIsSuccess(false);
     setLoading(false);
+    setCurrentImage(0);
+    setFailedImages({});
     onClose();
   };
 
@@ -68,9 +60,10 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
           transition={{ duration: 0.3 }}
           className="bg-white w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
         >
-          <div className="w-full md:w-1/2 relative h-64 md:h-auto bg-slate-100 flex items-center justify-center">
+          {/* Left Side Image Slider */}
+          <div className="w-full md:w-1/2 relative h-64 md:h-auto bg-slate-100 flex items-center justify-center overflow-hidden group">
             {isSuccess ? (
-              <div className="absolute inset-0 bg-slate-900 text-white flex flex-col items-center justify-center p-8 text-center">
+              <div className="absolute inset-0 bg-slate-900 text-white flex flex-col items-center justify-center p-8 text-center z-30">
                 <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
                   <Check size={32} className="text-white" />
                 </div>
@@ -80,38 +73,57 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
                 </p>
                 <button 
                   onClick={resetAndClose}
-                  className="bg-white text-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-widest rounded-lg hover:bg-amber-400 transition-colors"
+                  className="bg-white text-slate-900 px-6 py-3 text-xs font-semibold uppercase tracking-widest rounded-lg hover:bg-amber-400 transition-colors cursor-pointer"
                 >
                   Done
                 </button>
               </div>
             ) : (
               <>
-                <div className="absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-md shadow-sm">
+                <div className="absolute top-4 left-4 z-20 bg-slate-900/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-md shadow-sm">
                   {property.category}
                 </div>
                 
-                {!imageError ? (
+                {!isCurrentFailed ? (
                   <img 
-                    src={displayImage} 
+                    src={imageList[currentImage]} 
                     alt={property.title} 
-                    onError={() => setImageError(true)}
+                    onError={() => handleImageError(currentImage)}
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="flex flex-col items-center justify-center text-slate-400">
+                  <div className="flex flex-col items-center justify-center text-slate-400 absolute inset-0 bg-slate-100">
                     <ImageOff size={48} className="mb-2 opacity-50" />
-                    <span className="text-xs uppercase tracking-widest">Image Unavailable</span>
+                    <span className="text-xs uppercase tracking-widest">Image Blocked / Unavailable</span>
                   </div>
+                )}
+
+                {/* Slider Controls inside Modal */}
+                {imageList.length > 1 && (
+                  <>
+                    <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md transition-all z-20 cursor-pointer">
+                      <ChevronLeft size={18} className="text-slate-800" />
+                    </button>
+                    <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md transition-all z-20 cursor-pointer">
+                      <ChevronRight size={18} className="text-slate-800" />
+                    </button>
+                    
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 z-20">
+                      {imageList.map((_, idx) => (
+                        <div key={idx} className={`h-1.5 rounded-full transition-all ${idx === currentImage ? 'w-4 bg-white' : 'w-1.5 bg-white/60'}`} />
+                      ))}
+                    </div>
+                  </>
                 )}
               </>
             )}
           </div>
 
+          {/* Right Side Content */}
           <div className="w-full md:w-1/2 p-8 md:p-10 relative overflow-y-auto flex flex-col">
             <button 
               onClick={resetAndClose}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors bg-slate-50 hover:bg-slate-100 p-2 rounded-full z-10"
+              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors bg-slate-50 hover:bg-slate-100 p-2 rounded-full z-10 cursor-pointer"
             >
               <X size={20} />
             </button>
@@ -129,7 +141,7 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
 
                 <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
                   <div className="text-2xl font-bold text-slate-900">
-                    {getFormattedPrice()}
+                    {property.price}
                   </div>
                   <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest ${isOccupied ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
                     {property.status || 'Available'}
@@ -173,16 +185,16 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <button 
                       onClick={() => setShowCheckout(true)}
-                      className="flex-1 bg-amber-500 text-slate-900 px-6 py-4 text-xs font-bold uppercase tracking-widest hover:bg-amber-400 transition-colors rounded-lg shadow-md"
+                      className="flex-1 bg-amber-500 text-slate-900 px-6 py-4 text-xs font-bold uppercase tracking-widest hover:bg-amber-400 transition-colors rounded-lg shadow-md cursor-pointer"
                     >
                       Book Now
                     </button>
                     <button 
                       onClick={() => {
                         resetAndClose();
-                        onEnquire();
+                        if (onEnquire) onEnquire();
                       }}
-                      className="flex-1 bg-slate-900 text-white px-6 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors rounded-lg shadow-md"
+                      className="flex-1 bg-slate-900 text-white px-6 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors rounded-lg shadow-md cursor-pointer"
                     >
                       Send Enquiry
                     </button>
@@ -196,7 +208,7 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
                     <h3 className="text-xl font-medium text-slate-900 flex items-center gap-2">
                       <CreditCard size={20} className="text-amber-600" /> Secure Checkout
                     </h3>
-                    <button onClick={() => setShowCheckout(false)} className="text-xs text-slate-500 hover:text-slate-900 underline">
+                    <button onClick={() => setShowCheckout(false)} className="text-xs text-slate-500 hover:text-slate-900 underline cursor-pointer">
                       Back to details
                     </button>
                   </div>
@@ -207,7 +219,7 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
                       <p className="text-slate-500">{property.location}</p>
                     </div>
                     <div className="text-right font-bold text-slate-900 text-sm">
-                      {getSingleDayPrice()}
+                      {property.price}
                     </div>
                   </div>
 
@@ -239,7 +251,7 @@ const PropertyDetailModal = ({ isOpen, onClose, property, onEnquire, currency = 
                     <button 
                       type="submit" 
                       disabled={loading}
-                      className="w-full bg-slate-900 text-white mt-4 py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 hover:text-slate-900 transition-colors rounded-lg shadow-md flex items-center justify-center gap-2"
+                      className="w-full bg-slate-900 text-white mt-4 py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-amber-400 hover:text-slate-900 transition-colors rounded-lg shadow-md flex items-center justify-center gap-2 cursor-pointer"
                     >
                       {loading ? (
                         <span>Processing Payment...</span>

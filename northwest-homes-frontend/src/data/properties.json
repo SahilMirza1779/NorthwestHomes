@@ -8,8 +8,10 @@
     "duration": "1 Day to 1 Year",
     "status": "Available",
     "images": [
+      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
       "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
-      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80"
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80",
+      "https://images.unsplash.com/photo-1522771731478-444b7d341935?w=800&q=80"
     ],
     "capacity": "4 Beds"
   },
@@ -22,8 +24,10 @@
     "duration": "1 Day to 6 Months",
     "status": "Occupied",
     "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
       "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
     ],
     "capacity": "2 People"
   },
@@ -37,26 +41,78 @@
     "status": "Few Beds Left",
     "images": [
       "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80"
+      "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80",
+      "https://images.unsplash.com/photo-1522771731478-444b7d341935?w=800&q=80"
     ],
     "capacity": "Shared (3/Room)"
   },
   {
     "id": 4,
-    "title": "Luxury Suite Room",
-    "category": "Suite",
-    "location": "Deansgate, Manchester",
-    "price": "£100/day | £2,500/mo",
-    "duration": "Flexible",
+    "title": "High-Street Retail Shop",
+    "category": "Shops",
+    "location": "Market Street, Manchester",
+    "price": "£150/day | £3,500/mo",
+    "duration": "1 Year Lease",
     "status": "Available",
     "images": [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+      "https://images.unsplash.com/photo-1555529771-835f59fc5efe?w=800&q=80",
+      "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80",
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80"
     ],
-    "capacity": "Couples/Family"
+    "capacity": "Retail Space (800 sq ft)"
   },
   {
     "id": 5,
+    "title": "Corner Cafe / Bistro Unit",
+    "category": "Shops",
+    "location": "Northern Quarter, Manchester",
+    "price": "£200/day | £4,800/mo",
+    "duration": "3 Years Lease",
+    "status": "Available",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80",
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80",
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
+      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=80"
+    ],
+    "capacity": "Food & Drink (1200 sq ft)"
+  },
+  {
+    "id": 6,
+    "title": "Boutique Showroom Space",
+    "category": "Shops",
+    "location": "Deansgate, Manchester",
+    "price": "£250/day | £6,000/mo",
+    "duration": "2 Years Lease",
+    "status": "Occupied",
+    "images": [
+      "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80",
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+      "https://images.unsplash.com/photo-1555529771-835f59fc5efe?w=800&q=80",
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80"
+    ],
+    "capacity": "Showroom (1500 sq ft)"
+  },
+  {
+    "id": 7,
+    "title": "Express Convenience Store Unit",
+    "category": "Shops",
+    "location": "Salford Quays, Manchester",
+    "price": "£120/day | £2,800/mo",
+    "duration": "5 Years Lease",
+    "status": "Available",
+    "images": [
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80",
+      "https://images.unsplash.com/photo-1555529771-835f59fc5efe?w=800&q=80",
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+      "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80"
+    ],
+    "capacity": "Grocery / Retail (950 sq ft)"
+  },
+  {
+    "id": 8,
     "title": "Co-living Space",
     "category": "Co-living",
     "location": "Salford Quays, Manchester",
@@ -65,22 +121,10 @@
     "status": "Occupied",
     "images": [
       "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80"
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
     ],
     "capacity": "1 Person/Bed"
-  },
-  {
-    "id": 6,
-    "title": "Budget Single Room",
-    "category": "Room",
-    "location": "Northern Quarter, Manchester",
-    "price": "£25/day | £550/mo",
-    "duration": "1 Day to 1 Year",
-    "status": "Available",
-    "images": [
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
-      "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=80"
-    ],
-    "capacity": "1 Person"
   }
 ]

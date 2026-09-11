@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, ShieldCheck, Home, Users } from 'lucide-react';
+import { X, Calendar, ShieldCheck, Home, Store } from 'lucide-react';
 
 const About = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,13 +25,13 @@ const About = () => {
             >
               <span className="text-xs uppercase tracking-[0.3em] text-amber-600 font-medium mb-4 block">Our Vision</span>
               <h2 className="text-4xl md:text-5xl font-light tracking-tight text-slate-900 mb-6 leading-snug">
-                Flexible living spaces for <br/> <span className="font-serif italic text-slate-500">Every Journey</span>
+                Spaces & Retail Units for <br/> <span className="font-serif italic text-slate-500">Every Venture</span>
               </h2>
               <p className="text-slate-600 font-light leading-relaxed mb-6 text-sm">
-                At Northwest Homes, we believe finding a place to stay should be effortless. Whether you are a student looking for a vibrant dormitory, a professional seeking a co-living space, or a family needing a private room, we curate spaces that feel like home from day one.
+                At Northwest Homes, we believe finding a place to stay or a shop to start your business should be effortless. From vibrant student dorms and co-living spaces to prime high-street commercial retail shops, we curate environments designed for success.
               </p>
               <p className="text-slate-600 font-light leading-relaxed text-sm">
-                Say goodbye to rigid leases. From single-day stays to year-long accommodations, our flexible booking system and fully-managed properties ensure that your rental experience is seamless, transparent, and tailored to your needs.
+                Say goodbye to rigid leases. From flexible short-term stays to long-term commercial retail agreements, our fully-managed platform ensures a seamless and transparent experience.
               </p>
               <button 
                 onClick={() => setIsModalOpen(true)}
@@ -50,12 +50,12 @@ const About = () => {
             >
               <img 
                 src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" 
-                alt="Modern Co-living Space" 
+                alt="Modern Living & Retail Space" 
                 className="w-full h-full object-cover rounded-xl shadow-xl"
               />
               <div className="absolute -bottom-6 -left-6 bg-slate-900 text-white p-8 hidden md:block shadow-2xl rounded-tr-xl rounded-bl-xl border border-slate-800">
                 <p className="text-4xl font-light mb-1">1000+</p>
-                <p className="text-xs uppercase tracking-widest text-slate-400">Happy Residents</p>
+                <p className="text-xs uppercase tracking-widest text-slate-400">Happy Residents & Brands</p>
               </div>
             </motion.div>
           </div>
@@ -83,15 +83,15 @@ const About = () => {
                 The Northwest Homes Experience
               </span>
               <h3 className="text-3xl font-light text-slate-900 mb-6">
-                Your Trusted Rental Partner
+                Your Trusted Rental & Retail Partner
               </h3>
 
               <div className="space-y-6 text-slate-600 font-light leading-relaxed text-sm">
                 <p>
-                  Started with a vision to revolutionize the rental market, Northwest Homes has quickly become the go-to platform for students, working professionals, and travelers seeking high-quality, flexible accommodations.
+                  Started with a vision to revolutionize the property market across the North West, Northwest Homes provides top-tier residential accommodations and premium commercial retail spaces.
                 </p>
                 <p>
-                  We handle the heavy lifting—from verifying properties to ensuring fast Wi-Fi and clean spaces—so you can focus on living. Our diverse portfolio ranges from budget-friendly dorms to premium luxury suites, all available at your fingertips.
+                  Whether you are expanding your business onto a high street or securing a cozy studio apartment, we handle the complexities so you can focus on growth and living comfortably.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-gray-100">
@@ -100,18 +100,18 @@ const About = () => {
                       <Calendar size={24} />
                     </div>
                     <div>
-                      <h4 className="font-medium text-slate-900 text-base mb-1">Flexible Durations</h4>
-                      <p className="text-xs text-slate-500">Book for a day, a month, or a year without the hassle of long-term lock-ins.</p>
+                      <h4 className="font-medium text-slate-900 text-base mb-1">Flexible Terms</h4>
+                      <p className="text-xs text-slate-500">Customizable lease durations for both residential stays and commercial shops.</p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-4">
                     <div className="p-3 bg-slate-50 text-amber-600 rounded-lg">
-                      <Home size={24} />
+                      <Store size={24} />
                     </div>
                     <div>
-                      <h4 className="font-medium text-slate-900 text-base mb-1">Move-in Ready</h4>
-                      <p className="text-xs text-slate-500">Fully furnished spaces equipped with all essential amenities and utilities.</p>
+                      <h4 className="font-medium text-slate-900 text-base mb-1">Prime Retail Shops</h4>
+                      <p className="text-xs text-slate-500">High-footfall commercial spaces located in bustling hubs like Deansgate and Market Street.</p>
                     </div>
                   </div>
 
@@ -121,17 +121,17 @@ const About = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-slate-900 text-base mb-1">Verified Properties</h4>
-                      <p className="text-xs text-slate-500">Every listing is physically verified to ensure safety, cleanliness, and comfort.</p>
+                      <p className="text-xs text-slate-500">Every room and shop is physically verified to ensure quality and compliance.</p>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-4">
                     <div className="p-3 bg-slate-50 text-amber-600 rounded-lg">
-                      <Users size={24} />
+                      <Home size={24} />
                     </div>
                     <div>
-                      <h4 className="font-medium text-slate-900 text-base mb-1">Vibrant Community</h4>
-                      <p className="text-xs text-slate-500">Join a network of like-minded individuals in our co-living and hostel spaces.</p>
+                      <h4 className="font-medium text-slate-900 text-base mb-1">Move-in Ready</h4>
+                      <p className="text-xs text-slate-500">Fully equipped spaces ready for immediate occupation and business setup.</p>
                     </div>
                   </div>
                 </div>

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Users, ChevronLeft, ChevronRight, Clock, ImageOff } from 'lucide-react';
 
-const PropertyCard = ({ property, index, onViewDetails, currency = 'GBP' }) => {
+const PropertyCard = ({ property, index, onViewDetails }) => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [imageError, setImageError] = useState(false);
+  // Track failed images by their index so other images in slider still work
+  const [failedImages, setFailedImages] = useState({});
 
   const imageList = Array.isArray(property.images) && property.images.length > 0 
     ? property.images 
@@ -13,32 +14,15 @@ const PropertyCard = ({ property, index, onViewDetails, currency = 'GBP' }) => {
   const nextImage = (e) => {
     e.stopPropagation();
     setCurrentImage((prev) => (prev + 1) % imageList.length);
-    setImageError(false);
   };
 
   const prevImage = (e) => {
     e.stopPropagation();
     setCurrentImage((prev) => (prev === 0 ? imageList.length - 1 : prev - 1));
-    setImageError(false);
   };
 
-  // Safe and accurate currency formatting
-  const getFormattedPrice = () => {
-    let rate = 1;
-    let symbol = '£';
-
-    if (currency === 'USD') {
-      rate = 1.3;
-      symbol = '$';
-    } else if (currency === 'INR') {
-      rate = 108;
-      symbol = '₹';
-    }
-
-    const dayPrice = Math.round((property.basePriceDay || 20) * rate);
-    const monthPrice = Math.round((property.basePriceMonth || 400) * rate);
-
-    return `${symbol}${dayPrice}/day | ${symbol}${monthPrice.toLocaleString()}/mo`;
+  const handleImageError = (idx) => {
+    setFailedImages((prev) => ({ ...prev, [idx]: true }));
   };
 
   const statusColor = property.status === 'Occupied' 
@@ -46,6 +30,8 @@ const PropertyCard = ({ property, index, onViewDetails, currency = 'GBP' }) => {
     : property.status === 'Few Beds Left' 
       ? 'bg-orange-500/90' 
       : 'bg-green-500/90';
+
+  const isCurrentFailed = failedImages[currentImage];
 
   return (
     <motion.div 
@@ -64,21 +50,22 @@ const PropertyCard = ({ property, index, onViewDetails, currency = 'GBP' }) => {
           {property.status || 'Available'}
         </div>
         
-        {!imageError ? (
+        {!isCurrentFailed ? (
           <img 
             src={imageList[currentImage]} 
             alt={property.title} 
-            onError={() => setImageError(true)}
+            onError={() => handleImageError(currentImage)}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="flex flex-col items-center justify-center text-slate-400">
+          <div className="flex flex-col items-center justify-center text-slate-400 absolute inset-0 bg-slate-100">
             <ImageOff size={32} className="mb-2 opacity-50" />
-            <span className="text-[10px] uppercase tracking-widest">Unavailable</span>
+            <span className="text-[10px] uppercase tracking-widest">Image Blocked / Unavailable</span>
           </div>
         )}
 
-        {imageList.length > 1 && !imageError && (
+        {/* Slider Controls - Now they will ALWAYS remain active even if one image fails */}
+        {imageList.length > 1 && (
           <>
             <button onClick={prevImage} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-1.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-20">
               <ChevronLeft size={16} className="text-slate-800" />
@@ -103,7 +90,7 @@ const PropertyCard = ({ property, index, onViewDetails, currency = 'GBP' }) => {
         </p>
         
         <div className="text-base font-bold text-slate-900 mb-4">
-          {getFormattedPrice()}
+          {property.price}
         </div>
 
         <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600 bg-slate-50 p-3 rounded-lg mb-4 flex-grow">

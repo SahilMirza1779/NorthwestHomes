@@ -12,7 +12,7 @@ const Footer = ({ onOpenModal }) => {
             Northwest<span className="font-light text-slate-400">Homes</span>
           </span>
           <p className="text-xs text-slate-400 font-light leading-relaxed">
-            Redefining flexible living spaces, co-living, and premium student accommodations. Your trusted rental partner across the North West.
+            Redefining flexible living spaces, co-living, student accommodations, and prime commercial retail shops across the North West.
           </p>
         </div>
 
@@ -23,6 +23,7 @@ const Footer = ({ onOpenModal }) => {
             <li><a href="#" className="hover:text-amber-500 transition-colors">Premium Rooms</a></li>
             <li><a href="#" className="hover:text-amber-500 transition-colors">Student Hostels</a></li>
             <li><a href="#" className="hover:text-amber-500 transition-colors">Co-living Spaces</a></li>
+            <li><a href="#" className="hover:text-amber-500 transition-colors">Commercial Shops</a></li>
             <li>
               <button onClick={onOpenModal} className="hover:text-amber-500 transition-colors">
                 Book a Viewing
@@ -31,7 +32,7 @@ const Footer = ({ onOpenModal }) => {
           </ul>
         </div>
 
-        {/* Contact Info (Updated for UK Client) */}
+        {/* Contact Info */}
         <div>
           <h4 className="text-xs font-semibold text-white uppercase tracking-widest mb-6">Get in Touch</h4>
           <ul className="space-y-4 text-xs font-light text-slate-400">
@@ -54,7 +55,7 @@ const Footer = ({ onOpenModal }) => {
         <div>
           <h4 className="text-xs font-semibold text-white uppercase tracking-widest mb-6">Stay Updated</h4>
           <p className="text-xs text-slate-400 font-light mb-4">
-            Subscribe for exclusive rental deals and new property alerts.
+            Subscribe for exclusive rental deals, retail spaces, and new property alerts.
           </p>
           <div className="flex">
             <input 
@@ -72,7 +73,7 @@ const Footer = ({ onOpenModal }) => {
       
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-900 text-[10px] text-slate-500 flex flex-col md:flex-row justify-between items-center font-light tracking-wider">
         <p>© {new Date().getFullYear()} Northwest Homes. All rights reserved.</p>
-        <p className="mt-2 md:mt-0">Designed for Flexible Living Experiences</p>
+        <p className="mt-2 md:mt-0">Designed for Flexible Living & Retail Experiences</p>
       </div>
     </footer>
   );

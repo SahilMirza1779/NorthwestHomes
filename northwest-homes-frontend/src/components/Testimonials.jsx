@@ -13,11 +13,11 @@ const reviews = [
   },
   {
     id: 2,
-    name: "Sophia Martinez",
-    role: "Software Developer",
-    comment: "The co-living space is ultra-modern with lightning-fast Wi-Fi. Perfect for remote tech professionals.",
+    name: "Marcus Vance",
+    role: "Retail Store Owner",
+    comment: "Securing a prime high-street shop unit on Market Street was seamless. Northwest Homes made our business launch smooth.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80"
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80"
   },
   {
     id: 3,
@@ -35,8 +35,8 @@ const Testimonials = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs uppercase tracking-[0.3em] text-amber-400 font-medium mb-3 block">Verified Feedback</span>
-          <h2 className="text-4xl font-light tracking-tight mb-4">Loved by Residents</h2>
-          <p className="text-slate-400 text-sm font-light">See what students and professionals say about their living experience with us.</p>
+          <h2 className="text-4xl font-light tracking-tight mb-4">Loved by Residents & Retail Partners</h2>
+          <p className="text-slate-400 text-sm font-light">See what students, professionals, and shop owners say about their experience with us.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
